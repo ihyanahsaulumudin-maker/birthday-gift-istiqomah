@@ -18,21 +18,7 @@ html{
     scroll-behavior:smooth;
 }
 
-<body>
-    { <audio id="musik" loop>
-  <source src="lagu.mp3" type="audio/mpeg">
-</audio>
-
-<button onclick="putarMusik()">
-  🎵 Putar Musik ❤️
-</button>
-
-<script>
-function putarMusik() {
-  const musik = document.getElementById("musik");
-  musik.play();
-}
-</script>
+body{
     background:#10050b;
     color:white;
     font-family:Poppins,sans-serif;
@@ -85,6 +71,33 @@ h1,h2,h3{
     font-family:"Cormorant Garamond",serif;
     font-size:28px;
     font-style:italic;
+}
+
+/* =====================
+   MUSIC
+===================== */
+
+.music-box{
+    position:fixed;
+    top:20px;
+    right:20px;
+    z-index:3000;
+}
+
+.music-btn{
+    border:none;
+    background:#ff4f8bdd;
+    color:white;
+    padding:12px 18px;
+    border-radius:50px;
+    cursor:pointer;
+    font-family:Poppins,sans-serif;
+    box-shadow:0 5px 20px #0008;
+}
+
+.music-btn:hover{
+    background:#ff4f8b;
+    transform:scale(1.05);
 }
 
 /* =====================
@@ -426,6 +439,16 @@ h1,h2,h3{
     .final h2{
         font-size:65px;
     }
+
+    .music-box{
+        top:12px;
+        right:12px;
+    }
+
+    .music-btn{
+        padding:10px 14px;
+        font-size:12px;
+    }
 }
 
 @media(max-width:450px){
@@ -446,6 +469,23 @@ h1,h2,h3{
 </head>
 
 <body>
+
+<!-- =====================
+     MUSIC
+===================== -->
+
+<audio id="musik" loop>
+    <source src="lagu.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-box">
+
+<button class="music-btn" onclick="putarMusik()" id="musicButton">
+    🎵 Putar Musik
+</button>
+
+</div>
+
 
 <!-- =====================
      OPENING
@@ -579,9 +619,11 @@ Aku sayang kamu. ❤️
 </p>
 
 <center>
+
 <button class="btn" onclick="go('gallery')">
 Lihat Kenangan Kita →
 </button>
+
 </center>
 
 </div>
@@ -816,16 +858,48 @@ Tutup ❤️
 
 <script>
 
+/* =====================
+   NAVIGASI
+===================== */
+
 function go(id){
 
-document.getElementById(id).scrollIntoView({
-behavior:"smooth"
-});
+    document.getElementById(id).scrollIntoView({
+        behavior:"smooth"
+    });
 
 }
 
 
-/* HADIAH */
+/* =====================
+   MUSIK
+===================== */
+
+function putarMusik(){
+
+    const musik = document.getElementById("musik");
+    const tombol = document.getElementById("musicButton");
+
+    if(musik.paused){
+
+        musik.play();
+
+        tombol.innerHTML = "🔊 Musik Menyala";
+
+    }else{
+
+        musik.pause();
+
+        tombol.innerHTML = "🎵 Putar Musik";
+
+    }
+
+}
+
+
+/* =====================
+   HADIAH
+===================== */
 
 const gifts={
 
@@ -855,57 +929,61 @@ text:"Semoga umurmu dipenuhi kesehatan, kebahagiaan, rezeki yang luas, hati yang
 
 };
 
+
 function gift(number){
 
-let g=gifts[number];
+    let g=gifts[number];
 
-document.getElementById("modalContent").innerHTML=`
+    document.getElementById("modalContent").innerHTML=`
 
-<div style="font-size:70px">${g.icon}</div>
+    <div style="font-size:70px">${g.icon}</div>
 
-<h2>${g.title}</h2>
+    <h2>${g.title}</h2>
 
-<p>${g.text}</p>
+    <p>${g.text}</p>
 
-`;
+    `;
 
-document.getElementById("modal").classList.add("active");
+    document.getElementById("modal").classList.add("active");
 
 }
+
 
 function closeGift(){
 
-document.getElementById("modal").classList.remove("active");
+    document.getElementById("modal").classList.remove("active");
 
 }
 
 
-/* ANIMASI HATI */
+/* =====================
+   ANIMASI HATI
+===================== */
 
 function createHeart(){
 
-const h=document.createElement("div");
+    const h=document.createElement("div");
 
-h.className="floating";
+    h.className="floating";
 
-h.innerHTML=Math.random()>0.5?"❤️":"♡";
+    h.innerHTML=Math.random()>0.5?"❤️":"♡";
 
-h.style.left=Math.random()*100+"vw";
+    h.style.left=Math.random()*100+"vw";
 
-h.style.fontSize=(12+Math.random()*20)+"px";
+    h.style.fontSize=(12+Math.random()*20)+"px";
 
-h.style.setProperty(
-"--move",
-(Math.random()*300-150)+"px"
-);
+    h.style.setProperty(
+        "--move",
+        (Math.random()*300-150)+"px"
+    );
 
-h.style.animationDuration=(5+Math.random()*6)+"s";
+    h.style.animationDuration=(5+Math.random()*6)+"s";
 
-document.body.appendChild(h);
+    document.body.appendChild(h);
 
-setTimeout(()=>{
-h.remove();
-},12000);
+    setTimeout(()=>{
+        h.remove();
+    },12000);
 
 }
 
